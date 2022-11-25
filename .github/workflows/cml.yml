@@ -30,16 +30,6 @@ jobs:
       - uses: actions/checkout@v3
         with:
           clean: false
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '16'
-      - name: Install CML
-        run: |
-          npm i -g @dvcorg/cml
-          sudo apt-get install -y \
-            libcairo2-dev libfontconfig-dev \
-            libgif-dev libjpeg-dev libpango1.0-dev librsvg2-dev
-          npm install -g vega-cli vega-lite
       - name: Build image
         run: |
           cd vision/object_detection 
@@ -57,6 +47,12 @@ jobs:
     needs: ['prepare_environment']
     runs-on: ['self-hosted', 'cml-runner']
     steps:
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - uses: iterative/setup-cml@v1
+        with:
+          sudo: false
       - name: Run DVC experiment
         run: |
           cd vision/object_detection
@@ -105,11 +101,6 @@ jobs:
           cml comment --publish runs/val/exp/PR_curve.png >> report.md
           echo "## R curve" >> report.md
           cml comment --publish runs/val/exp/R_curve.png >> report.md
-
-  report-and-request:
-    needs: ['run_dvc_pipeline']
-    runs-on: ['self-hosted', 'cml-runner']
-    steps:
       - name: Publish report
         env:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
