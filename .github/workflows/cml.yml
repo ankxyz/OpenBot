@@ -46,6 +46,8 @@ jobs:
   run_dvc_pipeline:
     needs: ['prepare_environment']
     runs-on: ['self-hosted', 'cml-runner']
+    env:
+      REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
     steps:
       - uses: actions/setup-node@v3
         with:
@@ -102,14 +104,10 @@ jobs:
           echo "## R curve" >> report.md
           cml comment update --publish=./runs/val/exp/R_curve.png report.md
       - name: Publish report
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           cd vision/object_detection
           cml comment create report.md
       - name: Create pull request
-        env:
-          REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         run: |
           cd vision/object_detection
           cml pr create dvc.lock params.yaml
