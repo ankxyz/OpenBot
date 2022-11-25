@@ -57,9 +57,10 @@ jobs:
     needs: ['prepare_environment']
     runs-on: ['self-hosted', 'cml-runner']
     steps:
-      - name: Run DVC pipeline
+      - name: Run DVC experiment
         run: |
           cd vision/object_detection
+          source .venv/bin/activate
           dvc exp run
       - name: Build report
         run: |
