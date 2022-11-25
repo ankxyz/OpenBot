@@ -1,8 +1,12 @@
 name: OpenBot/vision/object_detection CML workflow
+
 on: 
   push:
     branches:
       - exp-cloud**
+
+env:
+  WORKDIR: vision/object_detection  
 
 jobs:
 
@@ -32,11 +36,11 @@ jobs:
           clean: false
       - name: Build image
         run: |
-          cd vision/object_detection 
+          cd ${{ env.WORKDIR }}
           ./scripts/build_image.sh
       - name: Build virtual environment
         run: |
-          cd vision/object_detection
+          cd ${{ env.WORKDIR }}
           python3 -m venv .venv
           echo "export PYTHONPATH=$PWD" >> .venv/bin/activate
           source .venv/bin/activate
@@ -57,15 +61,15 @@ jobs:
           sudo: false
       - name: Run DVC experiment
         run: |
-          cd vision/object_detection
+          cd ${{ env.WORKDIR }}
           source .venv/bin/activate
           dvc exp run
       - name: Build report
         run: |
-          cd vision/object_detection
+          cd ${{ env.WORKDIR }}
           source .venv/bin/activate
 
-          echo "# Experiment Details" >> report.md
+          echo "# Experiment Details" > report.md
           echo "User: ${{ github.GITHUB_ACTOR }}" >> report.md
           echo >> report.md
 
@@ -78,31 +82,31 @@ jobs:
 
           echo "# Train plots" >> report.md
           echo "## confusion matrix" >> report.md
-          cml comment update --publish=./runs/train/exp/confusion_matrix.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
-          cml comment update --publish=./runs/train/exp/F1_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/F1_curve.png)" >> report.md
           echo "## labels correlogram" >> report.md
-          cml comment update --publish=runs/train/exp/labels_correlogram.jpg report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/labels_correlogram.jpg)" >> report.md
           echo "## labels" >> report.md
-          cml comment update --publish=./runs/train/exp/labels.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/labels.png)" >> report.md
           echo "## P curve" >> report.md
-          cml comment update --publish=./runs/train/exp/P_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/P_curve.png)" >> report.md
           echo "## PR curve" >> report.md
-          cml comment update --publish=./runs/train/exp/PR_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/PR_curve.png)" >> report.md
           echo "## R curve" >> report.md
-          cml comment update --publish=./runs/train/exp/R_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/R_curve.png)" >> report.md
 
           echo "# Val plots" >> report.md
           echo "## confusion matrix" >> report.md
-          cml comment update --publish=./runs/train/val/confusion_matrix.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/train/val/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
-          cml comment update --publish=./runs/val/exp/F1_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/F1_curve.png)" >> report.md
           echo "## P curve" >> report.md
-          cml comment update --publish=./runs/val/exp/P_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/P_curve.png)" >> report.md
           echo "## PR curve" >> report.md
-          cml comment update --publish=./runs/val/exp/PR_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/PR_curve.png)" >> report.md
           echo "## R curve" >> report.md
-          cml comment update --publish=./runs/val/exp/R_curve.png report.md
+          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/R_curve.png)" >> report.md
       - name: Publish report
         run: |
           cd vision/object_detection
@@ -110,4 +114,4 @@ jobs:
       - name: Create pull request
         run: |
           cd vision/object_detection
-          cml pr create dvc.lock params.yaml
+          cml pr create dvc.lock
