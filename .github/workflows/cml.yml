@@ -71,36 +71,36 @@ jobs:
           echo "## Experiment metrics">> report.md
           dvc metrics show --show-md >> report.md
 
-          echo "## Metrics Diffs">> report.md
+          echo "## Metrics Diffs" >> report.md
           dvc metrics diff --all --show-md >> report.md
 
           echo "# Train plots" >> report.md
           echo "## confusion matrix" >> report.md
-          cml comment --publish runs/train/exp/confusion_matrix.png >> report.md
+          cml comment update --publish=./runs/train/exp/confusion_matrix.png report.md
           echo "## F1 curve" >> report.md
-          cml comment --publish runs/train/exp/F1_curve.png >> report.md
+          cml comment update --publish=./runs/train/exp/F1_curve.png report.md
           echo "## labels correlogram" >> report.md
-          cml comment --publish runs/train/exp/labels_correlogram.jpg >> report.md
+          cml comment update --publish=runs/train/exp/labels_correlogram.jpg report.md
           echo "## labels" >> report.md
-          cml comment --publish runs/train/exp/labels.png >> report.md
+          cml comment update --publish=./runs/train/exp/labels.png report.md
           echo "## P curve" >> report.md
-          cml comment --publish runs/train/exp/P_curve.png >> report.md
+          cml comment update --publish=./runs/train/exp/P_curve.png report.md
           echo "## PR curve" >> report.md
-          cml comment --publish runs/train/exp/PR_curve.png >> report.md
+          cml comment update --publish=./runs/train/exp/PR_curve.png report.md
           echo "## R curve" >> report.md
-          cml comment --publish runs/train/exp/R_curve.png >> report.md
+          cml comment update --publish=./runs/train/exp/R_curve.png report.md
 
           echo "# Val plots" >> report.md
           echo "## confusion matrix" >> report.md
-          cml comment --publish runs/train/val/confusion_matrix.png >> report.md
+          cml comment update --publish=./runs/train/val/confusion_matrix.png report.md
           echo "## F1 curve" >> report.md
-          cml comment --publish runs/val/exp/F1_curve.png >> report.md
+          cml comment update --publish=./runs/val/exp/F1_curve.png report.md
           echo "## P curve" >> report.md
-          cml comment --publish runs/val/exp/P_curve.png >> report.md
+          cml comment update --publish=./runs/val/exp/P_curve.png report.md
           echo "## PR curve" >> report.md
-          cml comment --publish runs/val/exp/PR_curve.png >> report.md
+          cml comment update --publish=./runs/val/exp/PR_curve.png report.md
           echo "## R curve" >> report.md
-          cml comment --publish runs/val/exp/R_curve.png >> report.md
+          cml comment update --publish=./runs/val/exp/R_curve.png report.md
       - name: Publish report
         env:
           REPO_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
