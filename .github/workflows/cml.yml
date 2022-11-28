@@ -113,5 +113,5 @@ jobs:
       - name: Publish report
         run: |
           cd ${{ env.WORKDIR }}
-          cml comment create --publish=false --pr report.md
+          cml comment create --pr report.md
       
