@@ -99,7 +99,7 @@ jobs:
 
           echo "# Val plots" >> report.md
           echo "## confusion matrix" >> report.md
-          echo '![]'"(runs/train/val/confusion_matrix.png)" >> report.md
+          echo '![]'"(runs/val/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
           echo '![]'"(runs/val/exp/F1_curve.png)" >> report.md
           echo "## P curve" >> report.md
@@ -113,5 +113,5 @@ jobs:
       - name: Publish report
         run: |
           cd ${{ env.WORKDIR }}
-          cml comment create report.md
+          cml comment create --publish=false --pr report.md
       
