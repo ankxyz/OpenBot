@@ -109,9 +109,7 @@ jobs:
           echo "## R curve" >> report.md
           echo '![]'"(runs/val/exp/R_curve.png)" >> report.md
       - name: Create pull request
-        run: |
-          cd ${{ env.WORKDIR }}
-          cml pr create .
+        run: cml pr create .
       - name: Publish report
         run: |
           cd ${{ env.WORKDIR }}
