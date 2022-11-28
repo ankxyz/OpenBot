@@ -1,4 +1,4 @@
-name: OpenBot/vision/object_detection CML workflow
+name: vision/object_detection CML workflow
 
 on: 
   push:
