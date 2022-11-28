@@ -83,36 +83,37 @@ jobs:
 
           echo "# Train plots" >> report.md
           echo "## confusion matrix" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/confusion_matrix.png)" >> report.md
+          echo '![]'"(runs/train/exp/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/F1_curve.png)" >> report.md
+          echo '![]'"(runs/train/exp/F1_curve.png)" >> report.md
           echo "## labels correlogram" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/labels_correlogram.jpg)" >> report.md
+          echo '![]'"(runs/train/exp/labels_correlogram.jpg)" >> report.md
           echo "## labels" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/labels.png)" >> report.md
+          echo '![]'"(runs/train/exp/labels.png)" >> report.md
           echo "## P curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/P_curve.png)" >> report.md
+          echo '![]'"(runs/train/exp/P_curve.png)" >> report.md
           echo "## PR curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/PR_curve.png)" >> report.md
+          echo '![]'"(runs/train/exp/PR_curve.png)" >> report.md
           echo "## R curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/exp/R_curve.png)" >> report.md
+          echo '![]'"(runs/train/exp/R_curve.png)" >> report.md
 
           echo "# Val plots" >> report.md
           echo "## confusion matrix" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/train/val/confusion_matrix.png)" >> report.md
+          echo '![]'"(runs/train/val/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/F1_curve.png)" >> report.md
+          echo '![]'"(runs/val/exp/F1_curve.png)" >> report.md
           echo "## P curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/P_curve.png)" >> report.md
+          echo '![]'"(runs/val/exp/P_curve.png)" >> report.md
           echo "## PR curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/PR_curve.png)" >> report.md
+          echo '![]'"(runs/val/exp/PR_curve.png)" >> report.md
           echo "## R curve" >> report.md
-          echo '![]'"(${{ env.WORKDIR }}/runs/val/exp/R_curve.png)" >> report.md
+          echo '![]'"(runs/val/exp/R_curve.png)" >> report.md
+      - name: Create pull request
+        run: |
+          cd ${{ env.WORKDIR }}
+          cml pr create .
       - name: Publish report
         run: |
           cd ${{ env.WORKDIR }}
           cml comment create report.md
-      - name: Create pull request
-        run: |
-          cd ${{ env.WORKDIR }}
-          cml pr create dvc.lock
+      
