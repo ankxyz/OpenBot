@@ -99,7 +99,7 @@ jobs:
 
           echo "# Val plots" >> report.md
           echo "## confusion matrix" >> report.md
-          echo '![]'"(runs/val/confusion_matrix.png)" >> report.md
+          echo '![]'"(runs/val/exp/confusion_matrix.png)" >> report.md
           echo "## F1 curve" >> report.md
           echo '![]'"(runs/val/exp/F1_curve.png)" >> report.md
           echo "## P curve" >> report.md
